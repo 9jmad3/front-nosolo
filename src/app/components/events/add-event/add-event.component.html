@@ -1,0 +1,124 @@
+<div class="container">
+
+    <!-- COMIENZO DEL FORMULARIO -->
+    <form [formGroup]="addRouteForm" class="row my-3" >
+        <!-- TITLE -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Título</mat-label>
+            <input 
+                formControlName="title" 
+                text="text" 
+                matInput 
+                placeholder="Titulo" 
+                required 
+            />
+        </mat-form-field>
+
+        <!-- TYPE -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Tipo de ruta</mat-label>
+            <mat-select required
+                        formControlName="type">
+                <mat-option value="road">Road</mat-option>
+                <mat-option value="offroad">Offroad</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <!-- PROVINCE -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Provincia</mat-label>
+            <mat-select required
+                        formControlName="province">
+                <mat-option value="huelva">Huelva</mat-option>
+                <mat-option value="sevilla">Sevilla</mat-option>
+                <mat-option value="cadiz">Cadiz</mat-option>
+                <mat-option value="malaga">Málaga</mat-option>
+                <mat-option value="cordoba">Córdoba</mat-option>
+                <mat-option value="granada">Granada</mat-option>
+                <mat-option value="jaen">Jaén</mat-option>
+                <mat-option value="almeria">Almeria</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- CC -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Cilindradas</mat-label>
+            <mat-select formControlName="cc" 
+                        required>
+                <mat-option value="all">Cualquiera</mat-option>
+                <mat-option value="125">Solo 125cc</mat-option>
+                <mat-option value="+250">Desde 250cc</mat-option>
+                <mat-option value="+600">Desde 600cc</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- KM -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Distancia</mat-label>
+            <mat-select formControlName="km" 
+                        required>
+                <mat-option value="-100">Menos de 100 km</mat-option>
+                <mat-option value="100-250">Entre 100 y 250 km</mat-option>
+                <mat-option value="250-400">Entre 250 y 400 km</mat-option>
+                <mat-option value="400-600">Entre 400 y 600 km</mat-option>
+                <mat-option value="+600">Más de 600 km</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- DATE -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Día de la ruta</mat-label>
+            <input 
+                    matInput 
+                    formControlName="date" 
+                    [matDatepicker]="picker"
+                    required 
+                    readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+        <!-- HOUR -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Hora de inicio</mat-label>
+            <mat-select formControlName="hour" 
+                        required>
+                <mat-option value="07:00">07:00</mat-option>
+                <mat-option value="08:00">08:00</mat-option>
+                <mat-option value="09:00">09:00</mat-option>
+                <mat-option value="10:00">10:00</mat-option>
+                <mat-option value="11:00">11:00</mat-option>
+                <mat-option value="12:00">12:00</mat-option>
+                <mat-option value="13:00">13:00</mat-option>
+                <mat-option value="14:00">14:00</mat-option>
+                <mat-option value="15:00">15:00</mat-option>
+                <mat-option value="16:00">16:00</mat-option>
+                <mat-option value="17:00">17:00</mat-option>
+                <mat-option value="18:00">18:00</mat-option>
+                <mat-option value="19:00">19:00</mat-option>
+                <mat-option value="20:00">20:00</mat-option>
+                <mat-option value="21:00">21:00</mat-option>
+                <mat-option value="22:00">22:00</mat-option>
+                <mat-option value="23:00">23:00</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+
+        <!-- DESCRIPTION -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Descripción</mat-label>
+            <textarea 
+                formControlName="description" 
+                text="text" 
+                matInput 
+                placeholder="Descripción" 
+                required 
+            ></textarea>
+        </mat-form-field>
+
+        <!-- SUBMIT -->
+        <button class="btn btn-success mx-3 w-100" (click)="saveRoute()" [disabled]="addRouteForm.invalid">Registrar</button>
+    </form>
+</div>

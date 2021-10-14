@@ -1,0 +1,80 @@
+<div class="bg-dark min-vh-100">
+
+    <div class="d-flex align-items-center justify-content-end p-3">
+        <span class="text-light display-6 mr-3">¿Tienes cuenta?</span>
+        <button class="btn btn-light px-3 shadow-sm" routerLink="" >Login</button>
+    </div>
+
+    
+    <section class="p-3">
+        <div class="col-12 d-flex align-items-center p-3 justify-content-center">
+            <div class="row d-flex justify-content-center">
+                <img src="./../../../assets/logo.png" alt="logo" class="col-12 img-fluid my-2" style="max-width: 500px;">
+                <p class="text-light col-12  rounded p-1 text-center">
+                    En nosolo encontrarás rutas creadas por y para motociclistas con gran variedad de localizaciones, tipos y cilindradas.
+                    ¡Regístrate y apúntate a la ruta que más te apetezca!
+                </p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center col-12 p-3">
+            
+            <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="pb-5 bg-light border shadow p-3 rounded">
+                
+                <div class="alert alert-warning" [ngClass]="hidden" role="alert">
+                    {{error}}
+                </div>
+
+                <!-- EMAIL -->
+                <div class="input-group-append my-3">
+                    <span class="text-dark d-flex align-items-center pr-3"><i class="fas fa-user fa-2x"></i></span>
+                    <mat-form-field>
+                        <input 
+                            formControlName="email" 
+                            text="email" 
+                            matInput 
+                            placeholder="Email" 
+                            required
+                        />
+                    </mat-form-field>
+                </div>
+
+                <!-- USER -->
+                <div class="input-group-append my-3">
+                    <span class="text-dark d-flex align-items-center pr-3"><i class="fas fa-user fa-2x"></i></span>
+                    <mat-form-field>
+                        <input 
+                            formControlName="username" 
+                            text="text" 
+                            matInput 
+                            placeholder="Nombre de usuario" 
+                            required
+                        />
+                    </mat-form-field>
+                </div>
+                
+                <!-- CONTRASEÑA -->
+                <div class="input-group my-3">
+                    <span class="text-dark d-flex align-items-center pr-3"><i class="fas fa-key fa-2x"></i></span>
+
+                    <mat-form-field>
+                        <input 
+                            formControlName="password"
+                            matInput [type]="hide ? 'password' : 'text'"
+                            required
+                            placeholder="Contraseña"
+                        >
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+                <!-- LOGIN -->
+                <div class="d-flex justify-content-center mt-3 login_container">
+                    <button class="btn btn-dark w-100">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

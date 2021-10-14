@@ -1,0 +1,12 @@
+.background{
+    background-image: url("../../../assets/01background.jpg");
+    background-size: cover;
+}
+
+.showError{
+    visibility: visible;
+}
+
+.hideError{
+    visibility: collapse;
+}

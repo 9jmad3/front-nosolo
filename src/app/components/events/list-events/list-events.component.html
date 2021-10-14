@@ -1,0 +1,88 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <form [formGroup]="filterRouteForm">   
+                <div class="input-group-append border my-1 shadow-sm rounded pt-1 px-2 justify-content-center my-3 bg-white">
+                    <mat-form-field>
+                    <mat-label>Tipo</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option (click)="filterRoute()" value="all">Todo</mat-option>
+                        <mat-option (click)="filterRoute()" value="road">Road</mat-option>
+                        <mat-option (click)="filterRoute()" value="offroad">Offroad</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                </div>
+        
+                <div class="input-group-append border my-1 shadow-sm rounded pt-1 px-2 justify-content-center my-3 bg-white">
+                    <mat-form-field>
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option (click)="filterRoute()" value="all">Todo</mat-option>
+                        <mat-option (click)="filterRoute()" value="active">Activo</mat-option>
+                        <mat-option (click)="filterRoute()" value="finalized">Finalizado</mat-option>
+                        <mat-option (click)="filterRoute()" value="cancelled">Cancelado</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>  
+        </div>
+    
+        <div class="col-12 col-md-9 ">
+            <div class="bg-white input-group-append border shadow-sm rounded h-auto justify-content-center my-2 p-2">
+                <mat-form-field class="w-75">
+                <mat-label>Ordenar</mat-label>
+                <mat-select>
+                    <mat-option (click)="compare('recent')" value="recent">Más recientes</mat-option>
+                    <mat-option (click)="compare('older')" value="older">Más antiguas</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+    
+            <mat-card *ngFor="let route of listRoutes" class="example-card my-3">
+                <div class="px-1">
+                    <div class="row justify-content-between justify-content-md-center align-items-center">
+                        <h2 class="col-12 col-md-10">
+                            {{route.title}}
+                            <div class="">
+                                <ng-container *ngIf="route.status == 'active'; else elseTemplate">
+                                    <span class="badge bg-success text-white">Ruta activa</span>
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <ng-container *ngIf="route.status == 'cancelled'; else elseTemplateTwo">
+                                        <span class="badge bg-danger text-white">Ruta cancelada</span>
+                                    </ng-container>
+                                    <ng-template #elseTemplateTwo>
+                                        <span class="badge bg-secondary text-white">Ruta finalizada</span>
+                                    </ng-template>
+                                </ng-template>
+                                <span>&nbsp;</span>
+                                <ng-container *ngIf="route.type == 'road'; else elseTemplateType">
+                                    <span class="badge bg-primary text-white">{{route.type}}</span>
+                                </ng-container>
+                                <ng-template #elseTemplateType>
+                                    <span class="badge bg-warning text-white">{{route.type}}</span>
+                                </ng-template>
+
+                                <span>&nbsp;</span>
+                                <span class="badge bg-info text-white">Distancia: {{route.km}} km</span>
+                                <span>&nbsp;</span>
+                                <ng-container *ngIf="route.cc == 'all'; else elseTemplateCc">
+                                    <span class="badge bg-info text-white">Cualquier cilindrada</span>
+                                </ng-container>
+                                <ng-template #elseTemplateCc>
+                                    <span class="badge bg-info text-white">Cilindradas: {{route.cc}}</span>
+                                </ng-template>
+                   
+                            </div>
+                        </h2>
+                        <div class="d-flex justify-content-center w-100 col-12 col-md-2">
+                            <button class="btn btn-dark shadow-sm w-100" routerLink="/in/events/info/{{route.id}}"><i class="fas fa-info-circle"></i> Info</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+    
+        </div>
+    </div>
+    
+</div>

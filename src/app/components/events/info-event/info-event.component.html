@@ -1,0 +1,78 @@
+<div class="container-fluid my-3">
+    
+    <mat-card class="example-card">
+      <div class="rounded border shadow-sm bg-light p-2 mb-3 d-flex justify-content-between align-items-center">
+        <span>Ruta posteada por: {{userName}}</span>
+        <button *ngIf="status == 'active' && userId == userIdRoute" class="btn btn-danger" (click)="cancelledRoute()">Cancelar ruta</button>
+      </div>
+
+      <div class="d-sm-flex justify-content-between align-items-center px-2">
+          <div>
+            <mat-card-title>{{title}}</mat-card-title>
+            <div class="">
+              <ng-container *ngIf="status == 'active'; else elseTemplate">
+                  <span class="badge bg-success text-white">Ruta activa</span>
+              </ng-container>
+              <ng-template #elseTemplate>
+                  <ng-container *ngIf="status == 'cancelled'; else elseTemplateTwo">
+                      <span class="badge bg-danger text-white">Ruta cancelada</span>
+                  </ng-container>
+                  <ng-template #elseTemplateTwo>
+                      <span class="badge bg-secondary text-white">Ruta finalizada</span>
+                  </ng-template>
+              </ng-template>
+              <span>&nbsp;</span>
+              <ng-container *ngIf="type == 'road'; else elseTemplateType">
+                  <span class="badge bg-primary text-white">{{type}}</span>
+              </ng-container>
+              <ng-template #elseTemplateType>
+                  <span class="badge bg-warning text-white">{{type}}</span>
+              </ng-template>
+
+              <span>&nbsp;</span>
+              <span class="badge bg-info text-white">Distancia: {{km}} km</span>
+              <span>&nbsp;</span>
+              <ng-container *ngIf="cc == 'all'; else elseTemplateCc">
+                  <span class="badge bg-info text-white">Cualquier cilindrada</span>
+              </ng-container>
+              <ng-template #elseTemplateCc>
+                  <span class="badge bg-info text-white">Cilindradas: {{cc}}</span>
+              </ng-template>
+            </div>
+          </div>
+          
+          <div class="py-1" *ngIf="status == 'active' && !pointed">
+            <button class="btn btn-success w-100" (click)="goRoute()">Apuntarme</button> 
+          </div>
+<!-- *ngIf="!listUserAsistant.includes(userId)" -->
+          
+      </div>
+      <div class="rounded border shadow-sm bg-light p-2 my-3 d-flex justify-content-between align-items-center">
+        <span>Hora de inicio: {{hour}}</span>
+        <span>Día: {{formatDate(date)}}</span>
+      </div>
+      <mat-card-content>
+        <p>{{description}}</p>
+      </mat-card-content>
+
+
+        <ng-container *ngIf="listUserAsistant.length > 1; else elseTemplateLengh">
+          <span>¡Ya hay {{listUserAsistant.length}} personas apuntadas a la ruta!</span>
+        </ng-container>
+        <ng-template #elseTemplateLengh>
+          <ng-container *ngIf="listUserAsistant.length == 1; else elseTemplateTwoLengh">
+            <span>¡Ya hay {{listUserAsistant.length}} persona apuntada a la ruta!</span>
+          </ng-container>
+          <ng-template #elseTemplateTwoLengh>
+            <span>No hay personas apuntadas. ¡Se la primera!</span>
+          </ng-template>
+        </ng-template>
+        
+
+    </mat-card>
+
+    <mat-card *ngFor="let assistant of listAssistant" class="d-flex justify-content-between align-items-center my-3">
+      {{assistant.username}} se apunta!
+      <button class="btn btn-danger" *ngIf="userId == assistant.id" (click)="cancelledAsistant()"><i class="far fa-times-circle"></i></button>
+  </mat-card>
+</div>

@@ -1,0 +1,25 @@
+<div class="container">
+
+    <!-- COMIENZO DEL FORMULARIO -->
+    <form [formGroup]="addVehicleForm" class="row my-3" >
+        <!-- TITLE -->
+        <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Marca, modelo, cc...</mat-label>
+            <input 
+                formControlName="title" 
+                text="text" 
+                matInput 
+                placeholder="Titulo" 
+                required 
+            />
+        </mat-form-field>
+
+        <!-- SUBMIT -->
+        <button class="btn btn-success mx-3 w-100" (click)="saveVehicle()" [disabled]="addVehicleForm.invalid">Registrar</button>
+    </form>
+
+    <mat-card *ngFor="let vehicle of listVehicles" class="d-flex justify-content-between align-items-center my-3">
+        {{vehicle.title}}
+        <button class="btn btn-danger" (click)="deleteVehicle(vehicle.id)"><i class="far fa-times-circle"></i></button>
+    </mat-card>
+</div>

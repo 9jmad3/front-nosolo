@@ -1,0 +1,39 @@
+<mat-sidenav-container class="sidenav-container bg-light">
+  <mat-sidenav #drawer class="sidenav">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/in/events">Buscar ruta</a>
+      <a mat-list-item routerLink="/in/events/add">Nueva ruta</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="#" (click)="this.authService.logout()">Salir</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="background">
+    <mat-toolbar class="bg-dark shadow-sm row d-flex justify-content-between">
+      <div class="row">
+        <div class="row">
+            <button
+            type="button"
+            aria-label="Toggle sidenav"
+            mat-icon-button
+            (click)="drawer.toggle()"
+            class="d-block d-sm-none pl-4 text-light"
+            >
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+        <!-- <span class="mr-2">front-nosolo</span> -->
+          <img src="./../../../assets/logo.png" alt="logo" class="pl-4 pr-5" style="height: 50px;">
+        </div>
+
+        <div class="row d-flex align-content-center">
+          <a mat-list-item href="#" class="text-light mx-2 d-none d-sm-block" routerLink="/in/events"><i class="fas fa-map-marked-alt"></i> Rutas</a>
+          <a mat-list-item href="#" class="text-light mx-2 d-none d-sm-block" routerLink="/in/events/add"><i class="fas fa-plus-circle"></i> Ruta</a>
+        </div>
+      </div>
+      <a mat-list-item href="#" class="text-light mx-1 d-none d-sm-block" (click)="this.authService.logout()"><i class="fas fa-sign-out-alt"></i> Salir</a>
+    </mat-toolbar>
+    
+      <router-outlet></router-outlet>
+      
+  </mat-sidenav-content>
+</mat-sidenav-container>
