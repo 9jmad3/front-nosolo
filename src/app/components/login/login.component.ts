@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
     remember: [localStorage.getItem('remember'),'']
   });
   hide = true;
+  error = "";
+  hidden = "hideError";
 
   constructor(private authService:  AuthService,
               private fb: FormBuilder,
@@ -45,36 +47,50 @@ export class LoginComponent implements OnInit {
    */
   onLogin():void{
     const formValue = this.loginForm.value;
-    this.authService.login(formValue).subscribe(res => {
+    this.authService.login(formValue)
+      .then(res => {
     
-      if(res.auth){   
-        var decoded = this.getDecodedAccessToken(localStorage.getItem('accesstoken'));
-        
+        console.log(res);
+        this.authService.saveToken(res.accessToken);
+        this.authService.setLoggedIn(true);
 
-        if (this.loginForm.get('remember').value) {
-          localStorage.setItem('remember', "true");
-          localStorage.setItem('user', this.loginForm.get('username').value);
-          localStorage.setItem('password', this.loginForm.get('password').value);
-        } 
-        
-        if (!this.loginForm.get('remember').value) {
-          localStorage.removeItem('remember');
-          localStorage.removeItem('user')
-          localStorage.removeItem('password')
-        }
+        if(res.auth){   
+          var decoded = this.getDecodedAccessToken(localStorage.getItem('accesstoken'));
+          
 
-        this.authService.setUser(decoded);
+          if (this.loginForm.get('remember').value) {
+            localStorage.setItem('remember', "true");
+            localStorage.setItem('user', this.loginForm.get('username').value);
+            localStorage.setItem('password', this.loginForm.get('password').value);
+          } 
+          
+          if (!this.loginForm.get('remember').value) {
+            localStorage.removeItem('remember');
+            localStorage.removeItem('user')
+            localStorage.removeItem('password')
+          }
 
-        this.router.navigate(['/in/events']);
-        
-        // if (this.authService.isAdmin) {
-        //   this.router.navigate(['/dashboard/calendar']); 
-        // } else {
-        //   this.router.navigate(['/dashboard/job/list']); 
-        // }    
+          this.authService.setUser(decoded);
+          this.router.navigate(['/in/events']);  
       }
       
+    })
+    .catch(err =>{
+      this.error = err.error;
+      this.hidden = "showError";
     })
   }
 }
 
+
+// login(authData: User): Observable<any>{
+  //   return this.httpClient.post<UserResponse | void>(`${environment.API_URL}auth/signin`, authData
+  //   ).pipe(
+  //     map((res: UserResponse) => {
+  //       this.saveToken(res.accessToken);
+  //       this.loggedIn.next(true);
+  //       return res;
+  //     }),
+  //     catchError((err) => this.handlerError(err))
+  //   );
+  // }

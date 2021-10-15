@@ -1,6 +1,7 @@
 export type Roles = 'SUSCRIPTOR' | 'ADMIN';
 
 export interface User {
+    email: string;
     username: string;
     password: string;
 }

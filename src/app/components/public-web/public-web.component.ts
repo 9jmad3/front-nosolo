@@ -21,7 +21,7 @@ export class PublicWebComponent implements OnInit {
 
   constructor(private authService:  AuthService,
               private fb: FormBuilder,
-              private router: Router) { }
+              private route: Router,) { }
 
   ngOnInit(): void {
   }
@@ -32,9 +32,19 @@ export class PublicWebComponent implements OnInit {
    onRegister():void{
     const formValue = this.registerForm.value;
     this.authService.registerUser(formValue)
-      .then(res => console.log(res))
+      .then(res => {
+        setTimeout(() => {
+          this.route.navigate(['']);
+        }, 1000);
+      })
       .catch(err => {
-        this.error = err.error;
+        let type = typeof(err.error);
+
+        if (type == "string") {
+          this.error = err.error;
+        } else {
+          this.error = err.error.errors;
+        }
         this.hidden = "showError";
       })
   }

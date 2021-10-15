@@ -13,6 +13,12 @@
                 <!-- COMIENZO DEL FORMULARIO -->
                 <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
+
+                    <div class="alert alert-warning mt-1" [ngClass]="hidden" role="alert">
+                        {{error}}
+                    </div>
+    
+
                     <!-- USER -->
                     <div class="input-group-append my-3">
                         <span class="text-dark d-flex align-items-center pr-3"><i class="fas fa-user fa-2x"></i></span>

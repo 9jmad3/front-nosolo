@@ -74,6 +74,7 @@
                     formControlName="date" 
                     [matDatepicker]="picker"
                     required 
+                    [min] = minDate
                     readonly>
             <mat-datepicker-toggle matSuffix [for]="picker"
             ></mat-datepicker-toggle>

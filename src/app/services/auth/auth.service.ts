@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { User, UserResponse, UserData } from 'src/app/models/user-interface';
-import { catchError, map } from 'rxjs/operators';
+import { User } from 'src/app/models/user-interface';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import jwt_decode from 'jwt-decode';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -21,9 +20,10 @@ export class AuthService {
   headers = new HttpHeaders({'accesstoken':localStorage.getItem('accesstoken')});
 
   constructor(private httpClient: HttpClient,
-              private router: Router,) { 
-    this.checkToken();
-  }
+              private router: Router,) 
+              { 
+                this.checkToken();
+              }
 
   registerUser(user: any){
     return this.httpClient.post<any>(`${environment.API_URL}newUser`, user).toPromise();
@@ -70,21 +70,8 @@ export class AuthService {
     return token.user.id;
   }
 
-  /**
-   * Método para logearse en la app.
-   * @param authData Datos de login del formulario del usuario
-   * @returns Token y datos del usuario
-   */
-  login(authData: User): Observable<any>{
-    return this.httpClient.post<UserResponse | void>(`${environment.API_URL}auth/signin`, authData
-    ).pipe(
-      map((res: UserResponse) => {
-        this.saveToken(res.accessToken);
-        this.loggedIn.next(true);
-        return res;
-      }),
-      catchError((err) => this.handlerError(err))
-    );
+  login(authData: User){
+    return this.httpClient.post<any>(`${environment.API_URL}auth/signin`, authData).toPromise();
   }
 
   /**
@@ -97,6 +84,10 @@ export class AuthService {
     this.loggedIn.next(false);
 
     this.router.navigate(['/']); 
+  }
+
+  setLoggedIn(boolean):void{
+    this.loggedIn.next(boolean);
   }
 
 
@@ -113,22 +104,8 @@ export class AuthService {
    * Método para guardar el token.
    * @param token 
    */
-  private saveToken(token: string):void{
+  saveToken(token: string):void{
     localStorage.setItem('accesstoken', token)
-  }
-
-  /**
-   * Método para mostrar los errores en el login.
-   * @param err 
-   * @returns 
-   */
-  private handlerError(err): Observable<never>{
-    let errorMessage = 'An error occurred retrienving data';
-    if (err) {
-      errorMessage = `Error: code ${err.message}`;
-    }
-    window.alert(err.error);
-    return throwError(err.error)
   }
 }
 

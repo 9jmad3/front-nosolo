@@ -1,3 +1,4 @@
+import { getLocaleDateFormat } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,6 +13,7 @@ export class AddEventComponent implements OnInit {
 
   idEmployee: number;
   accion: string;
+  minDate = new Date();
 
   addRouteForm = this.fb.group({
     title: ['',[Validators.required]],
@@ -31,8 +33,7 @@ export class AddEventComponent implements OnInit {
               private route: Router,
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   saveRoute(){
     const route = {
@@ -57,5 +58,4 @@ export class AddEventComponent implements OnInit {
       .catch(err => console.log(err))
     
   }
-
 }
